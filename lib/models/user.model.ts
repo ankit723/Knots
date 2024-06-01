@@ -10,7 +10,7 @@ const userSchema=new mongoose.Schema({
     knots:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:'Thread'
+            ref:'Knot'
         }
     ],
     onboarded:{
