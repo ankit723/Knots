@@ -2,6 +2,7 @@
 import { revalidatePath } from "next/cache";
 import User from "../models/user.model";
 import { connectedToDB } from "../mongoose";
+import Knot from "../models/knot.model";
 
 interface Params {
   userId: string;
@@ -57,4 +58,26 @@ export async function fetchUser(userId:string){
     }catch (error: any) {
         throw new Error(`Failed to fetch the user: ${error.message}`);
     }
+}
+
+
+export async function fetchUserPosts(userId:string){
+  try {
+    connectedToDB()
+
+    const knots=User.findOne({id: userId})
+    .populate({
+      path:"knots",
+      model:Knot,
+      populate:{
+        path:"author",
+        model:User,
+        select: "name image id"
+      }
+    })
+
+    return knots;
+  } catch (error:any) {
+    throw new Error(`Failed to fetch Posts ${error.message}`)
+  }
 }
