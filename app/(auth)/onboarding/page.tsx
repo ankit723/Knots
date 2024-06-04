@@ -1,12 +1,15 @@
 import AccountProfile from "@/components/forms/accountProfile";
 import { currentUser } from "@clerk/nextjs/server";
+import { fetchUser } from "@/lib/actions/user.action";
+import {redirect} from 'next/navigation'
+import Link from "next/link";
 
 async function Page(){
     const user =await currentUser()
 
-    const userInfo={
+    const userInfo = await fetchUser(user?.id || "")
 
-    }
+    if(userInfo && userInfo.onboarded) redirect('/')
 
     const userData={
         id:user?.id,
@@ -24,6 +27,11 @@ async function Page(){
 
             <section className="mt-9 bg-dark-2 p-10 ">
                 <AccountProfile user={userData} btnTitle={"Continue"}/>
+                <div className="w-full flex justify-center items-center my-10">
+                    <Link href={'/'} className='text-heading5-bold text-dark-3 bg-white px-5 py-2 rounded-lg'>
+                        Skip for now
+                    </Link>
+                </div>
             </section>
         </main>
     )

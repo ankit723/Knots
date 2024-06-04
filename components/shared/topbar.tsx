@@ -13,6 +13,9 @@ const Topbar = () => {
         </Link>
 
         <div className="flex items-center gap-1 ">
+            <SignedOut>
+                <Link href={"/sign-in"} className='text-heading5-bold text-dark-3 bg-white px-5 py-2 rounded-lg'>Sign In</Link>
+            </SignedOut>
             <div className="block md:hidden">
                 <SignedIn>
                     <SignOutButton>
