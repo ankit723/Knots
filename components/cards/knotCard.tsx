@@ -27,7 +27,7 @@ interface Props{
     isComment?:boolean
 }
 
-const KnotCard = async({
+const KnotCard = ({
     id,
     currentUserId,
     parentId,
@@ -54,7 +54,7 @@ const KnotCard = async({
                         <h4 className='cursor-pointer text-base-semibold text-light-1'>{author.username}</h4>
                     </Link>
 
-                    <p className='mt-2 text-small-regular text-light-2'>{content}</p>
+                    <Link className='mt-2 text-small-regular text-light-2 cursor-pointer' href={`/knot/${id}`}>{content}</Link>
 
                     <div className="mt-5 flex flex-col gap-3">
                         <div className="flex gap-3.5">
@@ -65,7 +65,6 @@ const KnotCard = async({
                             <Image src='/assets/repost.svg' alt='repost' width={24} height={24} className='cursor-pointer object-contain'/>
                             <Image src='/assets/share.svg' alt='share' width={24} height={24} className='cursor-pointer object-contain'/>
                         </div>
-
                         {isComment && comments.length > 0 && (
                             <>
                             <p className='mt-1 text-subtle-medium text-gray-1'>

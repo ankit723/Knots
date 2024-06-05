@@ -12,10 +12,8 @@ async function Page({params}:{params:{id:string}}){
 
   const user=await currentUser()
 
-  if(!user) return null;
-
   const result =await fetchUsers({
-    userId:user.id,
+    userId:user?.id || "",
     searchString:"",
     pageNumber:1,
     pageSize:25

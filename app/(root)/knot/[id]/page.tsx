@@ -10,13 +10,19 @@ import Knot from "@/lib/models/knot.model";
 const Page = async({ params }: { params: { id: string } }) => {
     if(!params.id) return null;
 
+    let isOnboarded=false;
+    let isAuthenticated=false;
+
     const user=await currentUser()
-    if(!user)return null;
+    if(user) isAuthenticated=true
+
 
     console.log(params.id)
 
-    const userInfo=await fetchUser(user.id)
-    if(!userInfo?.onboarded) redirect('/onboarding')
+    const userInfo=await fetchUser(user?.id || "")
+    if(userInfo){
+        isOnboarded=true;
+    }
 
     const post=await fetchKnotById(params.id)
 
@@ -42,8 +48,10 @@ const Page = async({ params }: { params: { id: string } }) => {
             <div className="mt-7">
                 <Comment 
                     postId={post.id}
-                    currentUserImg={userInfo.image}
-                    currentUserId={JSON.stringify(userInfo._id)}
+                    currentUserImg={userInfo?.image}
+                    currentUserId={JSON.stringify(userInfo?._id)}
+                    isOnboarded={isOnboarded}
+                    isAuthenticated={isAuthenticated}
                 />
             </div>
 
