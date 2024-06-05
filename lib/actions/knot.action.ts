@@ -115,7 +115,8 @@ export async function addCommentToKnot(knotId: string, commentText:string, userI
             const commentKnot=new Knot({
                 text:commentText,
                 author: userId,
-                parentId: knotId 
+                parentId: knotId,
+                createdAt: new Date()
             })
 
             const savedCommentKnot=await commentKnot.save()

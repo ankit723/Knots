@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { currentUser } from '@clerk/nextjs/server'
+import { formatDistanceToNow } from 'date-fns';
 
 interface Props{
     id: string,
@@ -39,6 +39,8 @@ const KnotCard = ({
     isComment
 }:Props) => {
 
+    const formattedDate = formatDistanceToNow(createdAt, { addSuffix: true });
+
   return (
     <article className={`flex w-full flex-col ${isComment?'px-0 xs:px-7':'rounded-xl bg-dark-2 p-7'}`}>
         <div className="flex items-start justify-between">
@@ -57,13 +59,17 @@ const KnotCard = ({
                     <Link className='mt-2 text-small-regular text-light-2 cursor-pointer' href={`/knot/${id}`}>{content}</Link>
 
                     <div className="mt-5 flex flex-col gap-3">
-                        <div className="flex gap-3.5">
-                            <Image src='/assets/heart-gray.svg' alt='heart' width={24} height={24} className='cursor-pointer object-contain'/>
-                            <Link href={`/knot/${id}`}>
-                                <Image src='/assets/reply.svg' alt='reply' width={24} height={24} className='cursor-pointer object-contain'/>
-                            </Link>
-                            <Image src='/assets/repost.svg' alt='repost' width={24} height={24} className='cursor-pointer object-contain'/>
-                            <Image src='/assets/share.svg' alt='share' width={24} height={24} className='cursor-pointer object-contain'/>
+                        <div className="flex justify-between items-center">
+                            <div className="flex gap-3.5">
+                                <Image src='/assets/heart-gray.svg' alt='heart' width={24} height={24} className='cursor-pointer object-contain'/>
+                                <Link href={`/knot/${id}`}>
+                                    <Image src='/assets/reply.svg' alt='reply' width={24} height={24} className='cursor-pointer object-contain'/>
+                                </Link>
+                                <Image src='/assets/repost.svg' alt='repost' width={24} height={24} className='cursor-pointer object-contain'/>
+                                <Image src='/assets/share.svg' alt='share' width={24} height={24} className='cursor-pointer object-contain'/>
+                            </div>
+
+                            <Link className='mt-2 text-small-regular text-[#dfdfdf] cursor-pointer' href={`/knot/${id}`}>{formattedDate}</Link>
                         </div>
                         {isComment && comments.length > 0 && (
                             <>
