@@ -28,7 +28,7 @@ async function Page(){
             <section className="mt-9 bg-dark-2 p-10 ">
                 <AccountProfile user={userData} btnTitle={"Continue"}/>
                 <div className="w-full flex justify-center items-center my-10">
-                    <Link href={'/'} className='text-heading5-bold text-dark-3 bg-white px-5 py-2 rounded-lg'>
+                    <Link href={'/'} className='text-heading5-bold text-[#7f7f7f] px-5 py-2 rounded-lg'>
                         Skip for now
                     </Link>
                 </div>
