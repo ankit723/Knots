@@ -59,7 +59,7 @@ const KnotCard = ({
                     <Link className='mt-2 text-small-regular text-light-2 cursor-pointer' href={`/knot/${id}`}>{content}</Link>
 
                     <div className="mt-5 flex flex-col gap-3">
-                        <div className="flex justify-between items-center">
+                        <div className="flex justify-center md:justify-between items-center gap-10 md:gap-0">
                             <div className="flex gap-3.5">
                                 <Image src='/assets/heart-gray.svg' alt='heart' width={24} height={24} className='cursor-pointer object-contain'/>
                                 <Link href={`/knot/${id}`}>
@@ -73,9 +73,9 @@ const KnotCard = ({
                         </div>
                         {isComment && comments.length > 0 && (
                             <>
-                            <p className='mt-1 text-subtle-medium text-gray-1'>
-                                <Link href={`/knot/${id}`}>{comments.length} replies</Link>
-                            </p>
+                                <p className='mt-1 text-subtle-medium text-gray-1'>
+                                    <Link href={`/knot/${id}`}>{comments.length} replies</Link>
+                                </p>
                             </>
                         )}
                     </div>
