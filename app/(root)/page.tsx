@@ -6,7 +6,6 @@ export default async function Home() {
   const user= await currentUser()
   const result = await fetchKnots(1, 30)
 
-  console.log(result)
   return(
     <div>
       <h1 className="head-text">Home</h1>

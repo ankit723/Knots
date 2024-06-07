@@ -58,18 +58,26 @@ const KnotCard = ({
 
                     <Link className='mt-2 text-small-regular text-light-2 cursor-pointer' href={`/knot/${id}`}>{content}</Link>
 
-                    <div className="mt-5 flex flex-col gap-3">
+                    <div className="mt-5 flex flex-col gap-3 justify-center">
                         <div className="flex justify-center md:justify-between items-center gap-10 md:gap-0">
                             <div className="flex gap-3.5">
                                 <Image src='/assets/heart-gray.svg' alt='heart' width={24} height={24} className='cursor-pointer object-contain'/>
-                                <Link href={`/knot/${id}`}>
                                     <Image src='/assets/reply.svg' alt='reply' width={24} height={24} className='cursor-pointer object-contain'/>
-                                </Link>
                                 <Image src='/assets/repost.svg' alt='repost' width={24} height={24} className='cursor-pointer object-contain'/>
                                 <Image src='/assets/share.svg' alt='share' width={24} height={24} className='cursor-pointer object-contain'/>
                             </div>
 
-                            <Link className='mt-2 text-small-regular text-[#dfdfdf] cursor-pointer' href={`/knot/${id}`}>{formattedDate}</Link>
+                            <div className="flex flex-col md:flex-row justify-center items-between">
+                                <Link className='mt-2 text-subtle-medium text-gray-1 cursor-pointer' href={`/knot/${id}`}>{formattedDate}- &nbsp;</Link>
+                                <div className="">
+                                    {!isComment && community && (
+                                        <Link className='mt-2 text-subtle-medium text-gray-1 cursor-pointer flex' href={`/communities/${community.id}`}>
+                                            <p>{community.name} Community</p>
+                                            <Image src={community.image} alt={community.name} width={14} height={14} className='cursor-pointer object-contain rounded-full ml-2'/>
+                                        </Link>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                         {isComment && comments.length > 0 && (
                             <>

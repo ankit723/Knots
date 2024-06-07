@@ -17,8 +17,6 @@ const Page = async({ params }: { params: { id: string } }) => {
     if(user) isAuthenticated=true
 
 
-    console.log(params.id)
-
     const userInfo=await fetchUser(user?.id || "")
     if(userInfo){
         isOnboarded=true;

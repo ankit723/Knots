@@ -2,6 +2,7 @@ import { fetchUserPosts } from '@/lib/actions/user.action'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import KnotCard from '../cards/knotCard'
+import { fetchCommunityPosts } from '@/lib/actions/community.action'
 
 interface Props{
     currentUserId:string,
@@ -10,8 +11,16 @@ interface Props{
 }
 
 const KnotsTab = async({currentUserId, accountId, accountType}:Props) => {
+    let result:any;
 
-    let result = await fetchUserPosts(accountId)
+    if(accountType==='Community'){
+        result = await fetchCommunityPosts(accountId)
+    }else{
+        result = await fetchUserPosts(accountId)
+    }
+
+    console.log("buubvibib", result.knots)
+
     if(!result) redirect('/')
 
     return (
@@ -25,8 +34,8 @@ const KnotsTab = async({currentUserId, accountId, accountType}:Props) => {
                     content={knot.text}
                     author={
                         accountType === 'User'
-                        ? {name:result.name, image:result.image, id:result.id}
-                        : {name:thread.author.name, image:knot.author.image, id:knot.author.id }}
+                        ? {username:result.username, image:result.image, id:result.id}
+                        : {username:knot.author.username, image:knot.author.image, id:knot.author.id }}
                     community={knot.community}
                     createdAt={knot.createdAt}
                     comments={knot.childrens}

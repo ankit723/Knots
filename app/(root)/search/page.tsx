@@ -19,8 +19,6 @@ async function Page({params}:{params:{id:string}}){
     pageSize:25
   })
 
-  console.log("all users are",result)
-
   return (
     <section>
         <h1 className="head-text mb-10">Search</h1>

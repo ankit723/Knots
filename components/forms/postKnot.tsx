@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 
 import { KnotValidation } from "@/lib/validations/knot";
 import { createKnot } from "@/lib/actions/knot.action";
+import { useOrganization } from "@clerk/nextjs";
 
 interface Props {
     user: {
@@ -40,6 +41,7 @@ function PostKnot({
 }) {
     const router = useRouter();
     const pathname = usePathname();
+    const organization=useOrganization()
 
     const form = useForm({
         resolver: zodResolver(KnotValidation),
@@ -49,9 +51,8 @@ function PostKnot({
     });
 
     const onSubmit = async (values: z.infer<typeof KnotValidation>) => {
-        console.log("Is Onboarded:", isOnboarded);
+
         if (!isOnboarded) {
-            console.log("cdvireiueiqbvber");
             router.push("/onboarding");
             return;
         }
@@ -59,7 +60,7 @@ function PostKnot({
         await createKnot({
             text: values.knot,
             author: userId,
-            communityId: null,
+            communityId: organization?.organization?.id ?? null,
             path: pathname,
         });
 
