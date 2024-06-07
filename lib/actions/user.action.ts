@@ -133,3 +133,29 @@ export async function fetchUsers({
     throw error;
   }
 }
+
+export async function getActivity(userId:string){
+  try {
+    connectedToDB()
+
+    const userKnots= await Knot.find({author:userId})
+
+    const childKnotIds=userKnots.reduce((acc, userKnot)=>{
+      return acc.concat(userKnot.children)
+    }, [])
+
+    const replies= await Knot.find({
+      _id:{$in:childKnotIds},
+      author:{$ne:userId}
+    }).populate({
+      path:'author',
+      model:User,
+      select: 'username image _id'
+    })
+
+    return replies
+
+  }catch(error: any){
+    throw new Error(`Failed to create/update user: ${error.message}`);
+  }
+}
