@@ -166,7 +166,34 @@ export async function fetchCommunities({
   }
 }
 
+export async function fetchCommunitiesByUserId({
+  userId,
+  sortBy = "desc",
+}: {
+  userId: string;
+  sortBy?: SortOrder;
+}) {
+  try {
+    await connectedToDB();
 
+    // Create an initial query object to filter communities by userId.
+    const query: FilterQuery<typeof Community> = { createdBy: userId };
+
+    // Define the sort options for the fetched communities based on createdAt field and provided sort order.
+    const sortOptions = { createdAt: sortBy };
+
+    // Create a query to fetch the communities based on the userId and sort criteria.
+    const communities = await Community.find(query)
+      .sort(sortOptions)
+      .populate("members")
+      .exec();
+
+    return { communities };
+  } catch (error) {
+    console.error("Error fetching communities:", error);
+    throw error;
+  }
+}
 
 export async function addMemberToCommunity(
   communityId: string,

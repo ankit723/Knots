@@ -9,6 +9,8 @@ import KnotsTab from "@/components/shared/knotsTab";
 import { fetchCommunities } from "@/lib/actions/community.action";
 import CommunityCard from "@/components/cards/CommunityCard";
 import { communityChildTabs } from "@/constants";
+import { fetchCommunitiesByUserId } from "@/lib/actions/community.action";
+import { fetchUserCommunities } from "@/lib/actions/user.action";
 
 async function Page({params}:{params:{id:string}}){
     const user=await currentUser()
@@ -19,11 +21,10 @@ async function Page({params}:{params:{id:string}}){
 
     if(!userInfo) redirect('/onboarding')
 
-    const result =await fetchCommunities({
-        searchString:"",
-        pageNumber:1,
-        pageSize:25
-        })
+    const result =await fetchCommunitiesByUserId({userId:userInfo._id})
+
+    const result2=await fetchUserCommunities(userInfo.id)
+    console.log(result2.communities[0].members)
 
     return (
         <section>
@@ -100,6 +101,28 @@ async function Page({params}:{params:{id:string}}){
                                     ):(
                                         <>
                                         {result.communities.map((community)=>(
+                                            <CommunityCard 
+                                            key={community.id}
+                                            id={community.id}
+                                            name={community.name}
+                                            username={community.username}
+                                            imgUrl={community.image}
+                                            bio={community.bio}
+                                            members={community.members}
+                                            />
+                                        ))}
+                                        </>
+                                    )}
+                                </div>
+                            </TabsContent>
+
+                            <TabsContent value={"addedCommunities"} className="w-full text-light-1">
+                                <div className="mt-14 flex flex-wrap gap-2">
+                                    {result2.communities.length===0?(
+                                        <p className="no-result">No Communities to Show</p>
+                                    ):(
+                                        <>
+                                        {result2.communities.map((community:any)=>(
                                             <CommunityCard 
                                             key={community.id}
                                             id={community.id}

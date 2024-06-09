@@ -22,6 +22,28 @@ export async function fetchUser(userId: string) {
   }
 }
 
+
+export async function fetchUserCommunities(userId:string){
+  try {
+    connectedToDB()
+
+    return await User.findOne({id:userId}).populate({
+      path:"communities",
+      model:Community,
+      populate:[
+        {
+          path:"members",
+          model:User
+        }
+      ]
+    })
+
+
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
+
 interface Params {
   userId: string;
   username: string;
