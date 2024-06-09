@@ -3,7 +3,7 @@
 import * as z from "zod";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
-import { usePathname, useRouter } from "next/navigation";
+import { redirect, usePathname, useRouter } from "next/navigation";
 import { ChangeEvent, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCommunity } from "@/lib/actions/community.action";
@@ -71,7 +71,10 @@ const CommunityProfile = ({ user, btnTitle }: Props) => {
 
     if (pathname === "/profile/edit") {
       router.back();
-    } else {
+    }else if(pathname.includes("/communities")){
+      redirect('/communities')
+    }
+    else {
       router.push("/");
     }
   };

@@ -22,6 +22,8 @@ async function Page(){
     pageSize:25
   })
 
+  console.log(result.communities.map((community)=>(community.id)))
+
   return (
     <section>
       <div className="flex justify-between items-center mb-10">

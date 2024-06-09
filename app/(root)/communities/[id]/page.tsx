@@ -22,7 +22,7 @@ async function Page({params}:{params:{id:string}}){
     if(userInfo){ 
         isOnboarded=true;
     }
-
+    console.log(params.id)
     const communityDetails=await fetchCommunityDetails(params.id)
 
     return (
@@ -64,7 +64,7 @@ async function Page({params}:{params:{id:string}}){
                     <TabsContent value="knots" className="w-full text-light-1">
                         <KnotsTab 
                             currentUserId={user?.id || ""}
-                            accountId={communityDetails.id}
+                            accountId={communityDetails._id}
                             accountType="Community"
                         />
                     </TabsContent>
