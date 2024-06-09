@@ -34,6 +34,12 @@ const ProfileHeader = async ({
         communityDetails = await fetchCommunityDetails(accountId);
     }
 
+    const members=communityDetails?.members.map((mem:any)=>mem.id)
+    console.log(members)
+
+    const requests=communityDetails?.requests.map((req:any)=>req.id)
+    console.log(requests)
+
     return (
         <div className="flex flex-col justify-start w-full">
             <div className="flex items-center justify-between">
@@ -59,17 +65,15 @@ const ProfileHeader = async ({
                 <p className="max-w-lg text-base-regular text-light-2">{bio}</p>
                 {type === "Community" &&
                     communityDetails.createdBy?.id !== user?.id &&
-                    !communityDetails.members
-                        .map((member:any) => member.id)
-                        .includes(user?.id) ? (
-                    communityDetails.requests[0]?.id === userInfo?.id ? (
+                    !members.includes(user?.id) ? (
+                        requests.includes(user?.id) ? (
                         <Button size="sm" className="community-card_btn">
-                            {type === "Community" ? "Requested" : "Follow"}
+                            Requested
                         </Button>
                     ) : (
                         <Button size="sm" className="community-card_btn">
                             <Link href={`/communities/request/${accountId}`}>
-                                {type === "Community" ? "Request" : "Follow"}
+                                Request
                             </Link>
                         </Button>
                     )

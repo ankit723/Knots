@@ -18,8 +18,7 @@ interface Props{
 const RequestCard = ({id, name, username, imgUrl, personType, communityId}:Props) => {
 
     const handleAccept=async()=>{
-        const community=await addMemberToCommunity(communityId, id)
-        window.location.reload()
+        await addMemberToCommunity(communityId, id)
     }
 
   return (

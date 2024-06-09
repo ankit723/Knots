@@ -6,7 +6,8 @@ import { redirect } from 'next/navigation'
 const page = async({params}:{params:{id:string}}) => {
     const user= await currentUser()
     const userInfo= await fetchUser(user?.id || "")
-    console.log(userInfo._id)
+
+    if(!user) redirect('/sign-in')
 
     const community= await addMemberRequestToCommunity(params.id, userInfo.id)
     if(!community)return "We got some issue to get you request to the other end"

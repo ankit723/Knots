@@ -14,11 +14,10 @@ import { use } from "react";
 
 async function Page({params}:{params:{id:string}}){
     const user=await currentUser()
-    if(!user) redirect("/sign-in");
 
     let isOnboarded=false;
 
-    const userInfo = await fetchUser(user.id)
+    const userInfo = await fetchUser(user?.id||"")
 
     if(userInfo){ 
         isOnboarded=true;
@@ -30,7 +29,7 @@ async function Page({params}:{params:{id:string}}){
         <section>
             <ProfileHeader 
                 accountId={communityDetails.id}
-                authUserId={user.id}
+                authUserId={user?.id||""}
                 name={communityDetails.name}
                 username={communityDetails.username}
                 imgUrl={communityDetails.image}
@@ -64,7 +63,7 @@ async function Page({params}:{params:{id:string}}){
 
                     <TabsContent value="knots" className="w-full text-light-1">
                         <KnotsTab 
-                            currentUserId={user.id}
+                            currentUserId={user?.id || ""}
                             accountId={communityDetails.id}
                             accountType="Community"
                         />
@@ -86,7 +85,7 @@ async function Page({params}:{params:{id:string}}){
                     </TabsContent>
 
                     <TabsContent value="requests" className="w-full text-light-1">
-                        {communityDetails.createdBy?.id===user.id?
+                        {communityDetails.createdBy?.id===user?.id?
                             (<section className="mt-9 flex flex-col gap-10">
                                 {communityDetails?.requests.map((member:any)=>(
                                     <RequestCard 
