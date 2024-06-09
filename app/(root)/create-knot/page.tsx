@@ -20,7 +20,7 @@ async function Page(){
         <>
            <h1 className="head-text">Tie new Knot</h1>
 
-           <PostKnot userId={userInfo?._id} isOnboarded={isOnboarded}/>
+           <PostKnot userId={userInfo?._id} isOnboarded={isOnboarded} organization={null}/>
         </>
     )
 }

@@ -7,9 +7,9 @@ import Knot from "../models/knot.model";
 import User from "../models/user.model";
 
 import { connectedToDB } from "../mongoose";
+import redirect from 'next/navigation'
 
 export async function createCommunity(
-  id: string,
   name: string,
   username: string,
   image: string,
@@ -27,7 +27,7 @@ export async function createCommunity(
     }
 
     const newCommunity = new Community({
-      id,
+      id:`org_${user.id}`,
       name,
       username,
       image,
@@ -36,6 +36,7 @@ export async function createCommunity(
     });
 
     const createdCommunity = await newCommunity.save();
+    await addMemberToCommunity(createdCommunity.id, user.id)
 
     // Update User model
     user.communities.push(createdCommunity._id);
@@ -53,10 +54,16 @@ export async function fetchCommunityDetails(id: string) {
   try {
     connectedToDB();
 
-    const communityDetails = await Community.findOne({ id }).populate([
+    const communityDetails = await Community.findOne({ id })
+    .populate([
       "createdBy",
       {
         path: "members",
+        model: User,
+        select: "name username image _id id",
+      },
+      {
+        path: "requests",
         model: User,
         select: "name username image _id id",
       },
@@ -159,6 +166,8 @@ export async function fetchCommunities({
   }
 }
 
+
+
 export async function addMemberToCommunity(
   communityId: string,
   memberId: string
@@ -193,7 +202,12 @@ export async function addMemberToCommunity(
     user.communities.push(community._id);
     await user.save();
 
-    return community;
+    await Community.updateOne(
+      { _id: community._id },
+      { $pull: { requests: user._id } }
+    );
+
+    return community
   } catch (error) {
     // Handle any errors
     console.error("Error adding member to community:", error);
@@ -299,6 +313,47 @@ export async function deleteCommunity(communityId: string) {
     return deletedCommunity;
   } catch (error) {
     console.error("Error deleting community: ", error);
+    throw error;
+  }
+}
+
+export async function addMemberRequestToCommunity(
+  communityId: string,
+  memberId: string
+) {
+  try {
+    connectedToDB();
+
+    // Find the community by its unique id
+    const community = await Community.findOne({ id: communityId });
+
+    if (!community) {
+      throw new Error("Community not found");
+    }
+
+    // Find the user by their unique id
+    const user = await User.findOne({ id: memberId });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Check if the user is already a member of the community
+    if (community.requests.includes(user._id)) {
+      throw new Error("A request is Already raised to the community");
+    }
+
+    // Add the user's _id to the members array in the community
+    community.requests.push(user._id);
+    await community.save();
+
+    // // Add the community's _id to the communities array in the user
+    // user.communities.push(community._id);
+    // await user.save();
+    return community;
+  } catch (error) {
+    // Handle any errors
+    console.error("Error adding member request to community:", error);
     throw error;
   }
 }

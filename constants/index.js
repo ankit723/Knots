@@ -35,10 +35,17 @@ export const sidebarLinks = [
     { value: "knots", label: "Knots", icon: "/assets/reply.svg" },
     { value: "replies", label: "Replies", icon: "/assets/members.svg" },
     { value: "tagged", label: "Tagged", icon: "/assets/tag.svg" },
+    { value: "communities", label: "Communities", icon: "/assets/community.svg" },
   ];
   
   export const communityTabs = [
     { value: "knots", label: "Knots", icon: "/assets/reply.svg" },
     { value: "members", label: "Members", icon: "/assets/members.svg" },
     { value: "requests", label: "Requests", icon: "/assets/request.svg" },
+    { value: "postKnot", label: "Post Knot", icon: "/assets/reply.svg" },
+  ];
+
+  export const communityChildTabs = [
+    { value: "createdCommunities", label: "Communities Created", icon: "/assets/community.svg" },
+    { value: "addedCommunities", label: "Communities Added", icon: "/assets/members.svg" },
   ];

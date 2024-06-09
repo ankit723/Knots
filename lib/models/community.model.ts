@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { boolean } from "zod";
 
 const communitySchema=new mongoose.Schema({
-    id:{type:String, required:true},
     username:{type:String, required:true, unique:true},
     name:{type:String, required:true},
     image: String,
@@ -18,6 +17,12 @@ const communitySchema=new mongoose.Schema({
         }
     ],
     members:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'User'
+        }
+    ],
+    requests:[
         {
             type:mongoose.Schema.Types.ObjectId,
             ref:'User'

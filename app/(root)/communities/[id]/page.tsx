@@ -8,11 +8,21 @@ import { communityTabs } from "@/constants";
 import KnotsTab from "@/components/shared/knotsTab";
 import { fetchCommunityDetails } from "@/lib/actions/community.action";
 import UserCard from "@/components/cards/userCard";
+import RequestCard from "@/components/cards/requestCard";
+import PostKnot from "@/components/forms/postKnot";
+import { use } from "react";
 
 async function Page({params}:{params:{id:string}}){
     const user=await currentUser()
-
     if(!user) redirect("/sign-in");
+
+    let isOnboarded=false;
+
+    const userInfo = await fetchUser(user.id)
+
+    if(userInfo){ 
+        isOnboarded=true;
+    }
 
     const communityDetails=await fetchCommunityDetails(params.id)
 
@@ -55,7 +65,7 @@ async function Page({params}:{params:{id:string}}){
                     <TabsContent value="knots" className="w-full text-light-1">
                         <KnotsTab 
                             currentUserId={user.id}
-                            accountId={communityDetails._id}
+                            accountId={communityDetails.id}
                             accountType="Community"
                         />
                     </TabsContent>
@@ -76,11 +86,26 @@ async function Page({params}:{params:{id:string}}){
                     </TabsContent>
 
                     <TabsContent value="requests" className="w-full text-light-1">
-                        <KnotsTab 
-                            currentUserId={user.id}
-                            accountId={communityDetails._id}
-                            accountType="Community"
-                        />
+                        {communityDetails.createdBy?.id===user.id?
+                            (<section className="mt-9 flex flex-col gap-10">
+                                {communityDetails?.requests.map((member:any)=>(
+                                    <RequestCard 
+                                        key={member.id}
+                                        id={member.id}
+                                        name={member.name}
+                                        username={member.username}
+                                        imgUrl={member.image}
+                                        personType="Community"
+                                        communityId={communityDetails.id}
+                                    />
+                                ))}
+                            </section>
+                            ):""
+                        }
+                    </TabsContent>
+
+                    <TabsContent value="postKnot" className="w-full text-light-1">
+                        <PostKnot userId={userInfo?._id} isOnboarded={true} organization={communityDetails.id}/>
                     </TabsContent>
                 </Tabs>
             </div>

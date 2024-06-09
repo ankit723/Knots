@@ -35,13 +35,14 @@ interface Props {
 function PostKnot({
     userId,
     isOnboarded,
+    organization
 }: {
     userId: string;
     isOnboarded: boolean;
+    organization:string|null
 }) {
     const router = useRouter();
     const pathname = usePathname();
-    const organization=useOrganization()
 
     const form = useForm({
         resolver: zodResolver(KnotValidation),
@@ -60,7 +61,7 @@ function PostKnot({
         await createKnot({
             text: values.knot,
             author: userId,
-            communityId: organization?.organization?.id ?? null,
+            communityId: organization ?? null,
             path: pathname,
         });
 

@@ -8,14 +8,7 @@ import { ChangeEvent, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCommunity } from "@/lib/actions/community.action";
 
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -39,7 +32,7 @@ interface Props {
   btnTitle: string;
 }
 
-const AccountProfile = ({ user, btnTitle }: Props) => {
+const CommunityProfile = ({ user, btnTitle }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const { startUpload } = useUploadThing("media");
@@ -68,14 +61,13 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
       }
     }
 
-    await updateUser({
-      name: values.name,
-      path: pathname,
-      username: values.username,
-      userId: user.id,
-      bio: values.bio,
-      image: values.profile_photo,
-    });
+    await createCommunity(
+        values.name,
+        values.username,
+        values.profile_photo,
+        values.bio,
+        user.id
+    );
 
     if (pathname === "/profile/edit") {
       router.back();
@@ -219,4 +211,4 @@ const AccountProfile = ({ user, btnTitle }: Props) => {
   );
 };
 
-export default AccountProfile;
+export default CommunityProfile;

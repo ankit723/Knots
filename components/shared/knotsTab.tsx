@@ -19,8 +19,6 @@ const KnotsTab = async({currentUserId, accountId, accountType}:Props) => {
         result = await fetchUserPosts(accountId)
     }
 
-    console.log("buubvibib", result.knots)
-
     if(!result) redirect('/')
 
     return (

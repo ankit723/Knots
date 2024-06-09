@@ -9,8 +9,10 @@ import KnotsTab from "@/components/shared/knotsTab";
 import UserCard from "@/components/cards/userCard";
 import { fetchCommunities } from "@/lib/actions/community.action";
 import CommunityCard from "@/components/cards/CommunityCard";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-async function Page({params}:{params:{id:string}}){
+async function Page(){
 
   const user=await currentUser()
 
@@ -22,12 +24,15 @@ async function Page({params}:{params:{id:string}}){
 
   return (
     <section>
-        <h1 className="head-text mb-10">Search</h1>
+      <div className="flex justify-between items-center mb-10">
+        <h1 className="head-text">All Communities</h1>
+        {user?(<Link href={`/communities/create/${user?.id}`}><Button size='sm' className='community-card_btn'>Create Community</Button></Link>):""}
+      </div>
 
 
-        <div className="mt-14 flex flex-col gap-9">
+        <div className="mt-14 flex flex-wrap gap-9">
           {result.communities.length===0?(
-            <p className="no-result">No Users</p>
+            <p className="no-result">No Communities to Show</p>
           ):(
             <>
               {result.communities.map((community)=>(
