@@ -36,7 +36,7 @@ const Topbar = async () => {
                 {user?(<Link href={'/profile/edit'}>
                     <div className=" bg-[#ffffff1d] px-6 rounded-lg py-1 flex items-center justify-center gap-3">
                         <Image
-                            src={userInfo?.image}
+                            src={userInfo?.image||user?.imageUrl}
                             alt="logo"
                             width={35}
                             height={35}
@@ -44,8 +44,8 @@ const Topbar = async () => {
                         />
 
                         <div className="flex-1 text-ellipsis">
-                            <h4 className='text-small-semibold text-light-1'>{userInfo?.name}</h4>
-                            <p className="text-small-medium text-gray-1">@{userInfo?.username}</p>
+                            <h4 className='text-small-semibold text-light-1'>{userInfo?.name||user?.firstName}</h4>
+                            <p className="text-small-medium text-gray-1">@{userInfo?.username || user?.username}</p>
                         </div>
                     </div>
                 </Link>):""}

@@ -9,7 +9,7 @@ async function Page(){
 
     const userInfo = await fetchUser(user?.id || "")
     
-    if(userInfo && userInfo.onboarded) redirect('/')
+    if(userInfo) redirect('/')
 
     const userData={
         id:user?.id,

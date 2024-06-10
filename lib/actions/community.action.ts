@@ -243,7 +243,7 @@ export async function addMemberToCommunity(
       { $pull: { requests: user._id } }
     );
 
-    redirect(`/${community.id}`)
+    redirect(`/communities/${community.id}`)
     return community
   } catch (error) {
     // Handle any errors
