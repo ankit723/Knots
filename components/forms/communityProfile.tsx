@@ -18,6 +18,7 @@ import { isBase64Image } from "@/lib/utils";
 
 import { UserValidation } from "@/lib/validations/user";
 import { updateUser } from "@/lib/actions/user.action";
+import { updateCommunityInfo } from "@/lib/actions/community.action";
 
 
 interface Props {
@@ -63,13 +64,23 @@ const CommunityProfile = ({ user, btnTitle }: Props) => {
 
     console.log("bevbievbiebviebvciiyevbeuyrv")
 
-    await createCommunity(
-      values.name,
-      values.username,
-      values.profile_photo,
-      values.bio,
-      user.id
-    );
+    if(!pathname.includes("edit")){
+      await createCommunity(
+        values.name,
+        values.username,
+        values.profile_photo,
+        values.bio,
+        user.id
+      );
+    }else{
+      await updateCommunityInfo(
+        user.id,
+        values.name,
+        values.username,
+        values.bio,
+        values.profile_photo
+      );
+    }
 
     console.log("bevbievbiebviebvciiyevbeuyrv")
 
