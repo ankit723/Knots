@@ -26,8 +26,17 @@ export async function createCommunity(
       throw new Error("User not found"); // Handle the case if the user with the id is not found
     }
 
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const charactersLength = characters.length;
+    for (let i = 0; i < 6; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    
+
     const newCommunity = new Community({
-      id:`org_${user.id}`,
+      id:`org_${user.id}_${result}`,
       name,
       username,
       image,
