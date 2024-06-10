@@ -24,7 +24,6 @@ async function Page({params}:{params:{id:string}}){
     const result =await fetchCommunitiesByUserId({userId:userInfo._id})
 
     const result2=await fetchUserCommunities(userInfo.id)
-    console.log(result2.communities[0].members)
 
     return (
         <section>

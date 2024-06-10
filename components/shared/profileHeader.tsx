@@ -35,10 +35,7 @@ const ProfileHeader = async ({
     }
 
     const members=communityDetails?.members.map((mem:any)=>mem.id)
-    console.log(members)
-
     const requests=communityDetails?.requests.map((req:any)=>req.id)
-    console.log(requests)
 
     return (
         <div className="flex flex-col justify-start w-full">

@@ -22,7 +22,6 @@ async function Page({params}:{params:{id:string}}){
     if(userInfo){ 
         isOnboarded=true;
     }
-    console.log(params.id)
     const communityDetails=await fetchCommunityDetails(params.id)
 
     return (
