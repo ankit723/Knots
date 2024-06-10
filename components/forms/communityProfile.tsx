@@ -61,22 +61,19 @@ const CommunityProfile = ({ user, btnTitle }: Props) => {
       }
     }
 
+    console.log("bevbievbiebviebvciiyevbeuyrv")
+
     await createCommunity(
-        values.name,
-        values.username,
-        values.profile_photo,
-        values.bio,
-        user.id
+      values.name,
+      values.username,
+      values.profile_photo,
+      values.bio,
+      user.id
     );
 
-    if (pathname === "/profile/edit") {
-      router.back();
-    }else if(pathname.includes("/communities")){
-      redirect('/communities')
-    }
-    else {
-      router.push("/");
-    }
+    console.log("bevbievbiebviebvciiyevbeuyrv")
+
+    redirect("/communities")
   };
 
   const handleImage = (

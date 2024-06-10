@@ -62,7 +62,9 @@ const KnotCard = ({
                         <div className="flex justify-center md:justify-between items-center gap-10 md:gap-0">
                             <div className="flex gap-3.5">
                                 <Image src='/assets/heart-gray.svg' alt='heart' width={24} height={24} className='cursor-pointer object-contain'/>
+                                <Link href={`/knot/${id}`}>
                                     <Image src='/assets/reply.svg' alt='reply' width={24} height={24} className='cursor-pointer object-contain'/>
+                                </Link>
                                 <Image src='/assets/repost.svg' alt='repost' width={24} height={24} className='cursor-pointer object-contain'/>
                                 <Image src='/assets/share.svg' alt='share' width={24} height={24} className='cursor-pointer object-contain'/>
                             </div>

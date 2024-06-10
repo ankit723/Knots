@@ -7,7 +7,7 @@ import Knot from "../models/knot.model";
 import User from "../models/user.model";
 
 import { connectedToDB } from "../mongoose";
-import redirect from 'next/navigation'
+import {redirect} from 'next/navigation'
 
 export async function createCommunity(
   name: string,
@@ -33,10 +33,8 @@ export async function createCommunity(
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
 
-    
-
     const newCommunity = new Community({
-      id:`org_${user.id}_${result}`,
+      id: `org_${user.id}_${result}`,
       name,
       username,
       image,
@@ -51,13 +49,16 @@ export async function createCommunity(
     user.communities.push(createdCommunity._id);
     await user.save();
 
-    return createdCommunity;
+    console.log("Created community object:", createdCommunity);
+
+    redirect("/communities")
   } catch (error) {
     // Handle any errors
     console.error("Error creating community:", error);
     throw error;
   }
 }
+
 
 export async function fetchCommunityDetails(id: string) {
   try {
@@ -242,6 +243,7 @@ export async function addMemberToCommunity(
       { $pull: { requests: user._id } }
     );
 
+    redirect(`/${community.id}`)
     return community
   } catch (error) {
     // Handle any errors

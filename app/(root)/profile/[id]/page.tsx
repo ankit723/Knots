@@ -15,11 +15,11 @@ import { fetchUserCommunities } from "@/lib/actions/user.action";
 async function Page({params}:{params:{id:string}}){
     const user=await currentUser()
 
-    if(!user) redirect("/sign-in");
+    
 
     const userInfo = await fetchUser(params.id)
 
-    if(!userInfo) redirect('/onboarding')
+    if(!userInfo) redirect('/sign-in')
 
     const result =await fetchCommunitiesByUserId({userId:userInfo._id})
 
@@ -29,7 +29,7 @@ async function Page({params}:{params:{id:string}}){
         <section>
             <ProfileHeader 
                 accountId={userInfo.id}
-                authUserId={user.id}
+                authUserId={user?.id ||""}
                 name={userInfo.name}
                 username={userInfo.username}
                 imgUrl={userInfo.image}
@@ -62,7 +62,7 @@ async function Page({params}:{params:{id:string}}){
 
                     <TabsContent value={"knots"} className="w-full text-light-1">
                         <KnotsTab 
-                            currentUserId={user.id}
+                            currentUserId={user?.id ||""}
                             accountId={userInfo.id}
                             accountType="User"
                         />

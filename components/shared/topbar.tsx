@@ -7,6 +7,7 @@ import { dark } from '@clerk/themes'
 import { currentUser } from '@clerk/nextjs/server'
 import Link from 'next/link'
 import { fetchUser } from '@/lib/actions/user.action'
+import { redirect } from 'next/navigation'
 
 const Topbar = async () => {
     const user = await currentUser()
