@@ -57,14 +57,25 @@ const ProfileHeader = async ({
                         <p className="text-base-medium text-gray-1">@{username}</p>
                     </div>
 
-                    <Link href={`/communities/edit/${communityDetails.id}`} className="relative h-5 w-5 object-cover">
-                        <Image
-                            src="/assets/edit.svg"
-                            alt="profile photo"
-                            fill
-                            className="object-cover shadow-2xl"
-                        />
-                    </Link>
+                    {type==='Community'?(
+                        <Link href={`/communities/edit/${communityDetails.id}`} className="relative h-5 w-5 object-cover">
+                            <Image
+                                src="/assets/edit.svg"
+                                alt="profile photo"
+                                fill
+                                className="object-cover shadow-2xl"
+                            />
+                        </Link>
+                    ):(
+                        <Link href={`/profile/edit`} className="relative h-5 w-5 object-cover">
+                            <Image
+                                src="/assets/edit.svg"
+                                alt="profile photo"
+                                fill
+                                className="object-cover shadow-2xl"
+                            />
+                        </Link>
+                    )}
                 </div>
             </div>
             <div className="flex justify-between items-center mt-6">

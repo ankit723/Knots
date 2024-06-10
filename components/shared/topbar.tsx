@@ -15,7 +15,7 @@ const Topbar = async () => {
     return (
         <nav className='topbar'>
             <Link href='/' className='flex items-center gap-4'>
-                <Image src='/assets/logo.svg' alt='logo' width={28} height={28} />
+                <Image src='/assets/logo.png' alt='logo' width={28} height={28} />
                 <p className='text-heading3-bold text-light-1 max-xs:hidden'>Knots</p>
             </Link>
 
@@ -47,6 +47,13 @@ const Topbar = async () => {
                             <h4 className='text-small-semibold text-light-1'>{userInfo?.name||user?.firstName}</h4>
                             <p className="text-small-medium text-gray-1">@{userInfo?.username || user?.username}</p>
                         </div>
+
+                        <Image
+                            src="/assets/edit.svg"
+                            alt="logo"
+                            width={20}
+                            height={20}
+                        />
                     </div>
                 </Link>):""}
 
