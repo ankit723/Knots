@@ -12,6 +12,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Knots",
   description: "A NextJS 14 Social App like Knots and Twiter Application",
+  icons:"/assets/logo.png"
 };
 
 export default function RootLayout({
