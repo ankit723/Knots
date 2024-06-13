@@ -98,6 +98,13 @@ const KnotCard = ({
                         </div>
                     </div>
                 </div>
+
+                {currentUserId===author.id?(
+                    <div className="flex gap-2.5">
+                        <Link href={`/knot/edit/${id}`}><Image src="/assets/edit.svg" alt="edit" width={17} height={17} className='cursor-pointer'/></Link>
+                        <Link href={`/knot/delete/${id}`}><Image src="/assets/delete.svg" alt="edit" width={17} height={17} className='cursor-pointer'/></Link>
+                    </div>
+                ):""}
             </div>
         </article>
     );

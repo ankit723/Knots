@@ -9,6 +9,7 @@ import Knot from "@/lib/models/knot.model";
 
 const Page = async({ params }: { params: { id: string } }) => {
     if(!params.id) return null;
+    if(params.id==="delete" || params.id==="edit")redirect('/')
 
     let isOnboarded=false;
     let isAuthenticated=false;

@@ -55,8 +55,7 @@ interface Params {
   path: string,
 }
 
-export async function createKnot({ text, author, communityId, path }: Params
-) {
+export async function createKnot({ text, author, communityId, path }: Params) {
   try {
     connectedToDB();
 
@@ -89,6 +88,20 @@ export async function createKnot({ text, author, communityId, path }: Params
   }
 }
 
+export async function editKnot(knotId:string, text:string) {
+  try {
+    connectedToDB();
+    const createdKnot = await Knot.findByIdAndUpdate(knotId,
+      {
+        text,
+        createdAt:Date.now()
+      }
+    );
+  } catch (error: any) {
+    throw new Error(`Failed to create knot: ${error.message}`);
+  }
+}
+
 async function fetchAllChildKnots(knotId: string): Promise<any[]> {
   const childKnots = await Knot.find({ parentId: knotId });
 
@@ -101,7 +114,7 @@ async function fetchAllChildKnots(knotId: string): Promise<any[]> {
   return descendantKnots;
 }
 
-export async function deleteKnot(id: string, path: string): Promise<void> {
+export async function deleteKnot(id: string): Promise<void> {
   try {
     connectedToDB();
 
@@ -150,8 +163,6 @@ export async function deleteKnot(id: string, path: string): Promise<void> {
       { _id: { $in: Array.from(uniqueCommunityIds) } },
       { $pull: { knots: { $in: descendantKnotIds } } }
     );
-
-    revalidatePath(path);
   } catch (error: any) {
     throw new Error(`Failed to delete knot: ${error.message}`);
   }
