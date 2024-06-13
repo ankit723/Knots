@@ -179,7 +179,7 @@ module.exports = {
         "logout-btn": "#FF5A5A",
         "navbar-menu": "rgba(16, 16, 18, 0.6)",
         "dark-1": "#222831",
-        "dark-2": "#31363F",
+        "dark-2": "#2c3139",
         "dark-3": "#344955",
         "dark-4": "#1F1F22",
         "light-1": "#FFFFFF",
