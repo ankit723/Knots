@@ -9,7 +9,7 @@ export default function Page() {
   return (
     <div className="flex flex-col justify-start items-center  px-10 bg-30-black-70-white py-20 gap-20">
       <div className="w-full md:px-36 px-0 flex flex-col">
-        <Image src='/assets/logo.svg' alt='logo' width={34} height={34}/>
+        <Image src='/assets/logo.png' alt='logo' width={34} height={34}/>
         <p className="text-[#9e9e9e] text-left font-light">Let&#39;s get you tied you to the Knots</p>
         <h1 className="text-white head-text">Sign Up Now! To get connected to the world of knots</h1>
       </div>
