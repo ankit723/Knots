@@ -8,6 +8,7 @@ import User from "../models/user.model";
 
 import { connectedToDB } from "../mongoose";
 import {redirect} from 'next/navigation'
+import { revalidatePath } from "next/cache";
 
 export async function createCommunity(
   name: string,
@@ -330,23 +331,26 @@ export async function deleteCommunity(communityId: string) {
       id: communityId,
     });
 
+
     if (!deletedCommunity) {
       throw new Error("Community not found");
     }
 
+    console.log(deletedCommunity._id)
     // Delete all Knots associated with the community
-    await Knot.deleteMany({ community: communityId });
+    await Knot.deleteMany({ community: deletedCommunity._id });
 
     // Find all users who are part of the community
-    const communityUsers = await User.find({ communities: communityId });
+    const communityUsers = await User.find({communities:deletedCommunity._id});
 
     // Remove the community from the 'communities' array for each user
     const updateUserPromises = communityUsers.map((user) => {
-      user.communities.pull(communityId);
+      user.communities.pull(deletedCommunity._id);
       return user.save();
     });
 
     await Promise.all(updateUserPromises);
+    redirect('/communities')
 
     return deletedCommunity;
   } catch (error) {

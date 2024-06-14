@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
+import { currentUser } from "@clerk/nextjs/server";
+import CommunityDeleteActionButton from "../shared/communityActionButton";
 
 import { Button } from "../ui/button";
 
@@ -14,25 +16,37 @@ interface Props {
   }[];
 }
 
-function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
+async function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
+  const user=await currentUser()
   return (
     <article className='community-card'>
-      <div className='flex flex-wrap items-center gap-3'>
-        <Link href={`/communities/${id}`} className='relative h-12 w-12'>
-          <Image
-            src={imgUrl}
-            alt='community_logo'
-            fill
-            className='rounded-full object-cover'
-          />
-        </Link>
+      <div className='flex flex-wrap justify-between items-center gap-3'>
 
-        <div>
-          <Link href={`/communities/${id}`}>
-            <h4 className='text-base-semibold text-light-1'>{name}</h4>
+        <div className="flex flex-wrap items-center gap-3">
+          <Link href={`/communities/${id}`} className='relative h-12 w-12'>
+            <Image
+              src={imgUrl}
+              alt='community_logo'
+              fill
+              className='rounded-full object-cover'
+            />
           </Link>
-          <p className='text-small-medium text-gray-1'>@{username}</p>
+
+          <div>
+            <Link href={`/communities/${id}`}>
+              <h4 className='text-base-semibold text-light-1'>{name}</h4>
+            </Link>
+            <p className='text-small-medium text-gray-1'>@{username}</p>
+          </div>
         </div>
+
+        {id.includes(user?.id||"")?(
+          <div className="flex gap-2.5 items-center justify-center">
+            <Link href={`/communities/edit/${id}`}><Image src="/assets/edit.svg" alt="edit" width={17} height={17} className='cursor-pointer'/></Link>
+            <CommunityDeleteActionButton id={id}/>
+          </div>
+        ):null}
+        
       </div>
 
       <p className='mt-4 text-subtle-medium text-gray-1'>{bio}</p>

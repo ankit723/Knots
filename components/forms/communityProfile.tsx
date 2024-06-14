@@ -81,10 +81,6 @@ const CommunityProfile = ({ user, btnTitle }: Props) => {
         values.profile_photo
       );
     }
-
-    console.log("bevbievbiebviebvciiyevbeuyrv")
-
-    redirect("/communities")
   };
 
   const handleImage = (
