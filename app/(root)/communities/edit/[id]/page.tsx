@@ -11,7 +11,7 @@ async function Page({ params }: { params: { id: string } }){
 
     const userData = {
         id: userInfo?.id || "",
-        objectId: userInfo?._id || "",
+        objectId: (userInfo?._id).toString() || "",
         username: userInfo?.username || "",
         name: userInfo?.name || "",
         bio: userInfo?.bio || "",

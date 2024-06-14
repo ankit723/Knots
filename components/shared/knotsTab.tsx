@@ -25,8 +25,8 @@ const KnotsTab = async({currentUserId, accountId, accountType}:Props) => {
         <section className='mt-9 flex flex-col gap-10'>
             {result.knots.map((knot:any)=>(
                 <KnotCard 
-                    key={knot._id}
-                    id={knot._id}
+                    key={(knot._id).toString()}
+                    id={(knot._id).toString()}
                     currentUserId={currentUserId}
                     parentId={knot.parentId}
                     content={knot.text}

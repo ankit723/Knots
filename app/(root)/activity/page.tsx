@@ -14,7 +14,7 @@ const Page = async() => {
   const userInfo=await fetchUser(user.id);
   if(!userInfo) redirect('/onboarding')
 
-  const activities=await getActivity(userInfo._id)
+  const activities=await getActivity((userInfo._id).toString())
 
   return (
     <section>
@@ -24,7 +24,7 @@ const Page = async() => {
           {activities.length>0?(
             <>
             {activities.map((activity)=>(
-              <Link key={activity._id} href={`/knot/${activity.parentId}`}>
+              <Link key={(activity._id).toString()} href={`/knot/${activity.parentId}`}>
                 <article className="activity-card">
                   <Image src={activity.author.image} alt="Profile Picture" width={20} height={20} className="rounded-full object-cover"/>
                   <p className="!text-small-regular text-light-1">

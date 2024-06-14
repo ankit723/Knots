@@ -21,7 +21,7 @@ async function Page({params}:{params:{id:string}}){
 
     if(!userInfo) redirect('/sign-in')
 
-    const result =await fetchCommunitiesByUserId({userId:userInfo._id})
+    const result =await fetchCommunitiesByUserId({userId:(userInfo._id).toString()})
 
     const result2=await fetchUserCommunities(userInfo.id)
 

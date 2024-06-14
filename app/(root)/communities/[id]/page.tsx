@@ -63,7 +63,7 @@ async function Page({params}:{params:{id:string}}){
                     <TabsContent value="knots" className="w-full text-light-1">
                         <KnotsTab 
                             currentUserId={user?.id || ""}
-                            accountId={communityDetails._id}
+                            accountId={(communityDetails._id).toString()}
                             accountType="Community"
                         />
                     </TabsContent>
@@ -103,7 +103,7 @@ async function Page({params}:{params:{id:string}}){
                     </TabsContent>
 
                     <TabsContent value="postKnot" className="w-full text-light-1">
-                        <PostKnot userId={userInfo?._id} isOnboarded={true} organization={communityDetails.id}/>
+                        <PostKnot userId={(userInfo?._id).toString()} isOnboarded={true} organization={communityDetails.id}/>
                     </TabsContent>
                 </Tabs>
             </div>

@@ -32,8 +32,8 @@ const Page = async({ params }: { params: { id: string } }) => {
         <section className="relative">
             <div className="">
                 <KnotCard
-                key={post._id}
-                id={post._id}
+                key={(post._id).toString()}
+                id={(post._id).toString()}
                 currentUserId={user?.id || ""}
                 parentId={post.parentId}
                 content={post.text}
@@ -48,7 +48,7 @@ const Page = async({ params }: { params: { id: string } }) => {
                 <Comment 
                     postId={post.id}
                     currentUserImg={userInfo?.image}
-                    currentUserId={JSON.stringify(userInfo?._id)}
+                    currentUserId={JSON.stringify((userInfo?._id).toString())}
                     isOnboarded={isOnboarded}
                     isAuthenticated={isAuthenticated}
                 />
@@ -58,8 +58,8 @@ const Page = async({ params }: { params: { id: string } }) => {
                 {
                     post.children.map((childItem: any)=>(
                         <KnotCard
-                            key={childItem._id}
-                            id={childItem._id}
+                            key={(childItem._id).toString()}
+                            id={(childItem._id).toString()}
                             currentUserId={user?.id || ""}
                             parentId={childItem.parentId}
                             content={childItem.text}
