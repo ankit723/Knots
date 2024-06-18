@@ -2,6 +2,7 @@ import { currentUser } from "@clerk/nextjs/server"
 import {redirect} from 'next/navigation'
 import { fetchUser } from "@/lib/actions/user.action";
 import EditKnot from "@/components/forms/editKnot";
+import RepostKnot from "@/components/forms/repostKnot";
 
 async function Page({params}:{params:{id:string}}){
     if(!params.id) redirect("/")
@@ -20,9 +21,9 @@ async function Page({params}:{params:{id:string}}){
 
     return (
         <>
-           <h1 className="head-text">Edit Your Knot</h1>
+           <h1 className="head-text">Tie new Knot</h1>
 
-           <EditKnot id={params.id}/>
+           <RepostKnot id={params.id} author={(userInfo?._id).toString()}/>
         </>
     )
 }

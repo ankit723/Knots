@@ -282,7 +282,7 @@ export async function removeUserFromCommunity(
     // Remove the user's _id from the members array in the community
     await Community.updateOne(
       { _id: communityIdObject._id },
-      { $pull: { members: userIdObject._id } }
+      { $pull: { members: userIdObject._id, requests: userIdObject._id } }
     );
 
     // Remove the community's _id from the communities array in the user

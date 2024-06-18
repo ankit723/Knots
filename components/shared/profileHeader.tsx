@@ -58,23 +58,41 @@ const ProfileHeader = async ({
                     </div>
 
                     {type==='Community'?(
-                        <Link href={`/communities/edit/${communityDetails.id}`} className="relative h-5 w-5 object-cover">
-                            <Image
-                                src="/assets/edit.svg"
-                                alt="profile photo"
-                                fill
-                                className="object-cover shadow-2xl"
-                            />
-                        </Link>
+                        <>
+                        {accountId.includes(authUserId)?
+                            <Link href={`/communities/edit/${communityDetails.id}`} className="relative h-5 w-5 object-cover">
+                                <Image
+                                    src="/assets/edit.svg"
+                                    alt="profile photo"
+                                    fill
+                                    className="object-cover shadow-2xl"
+                                />
+                            </Link>:
+                            members.includes(user?.id) || requests.includes(user?.id)?(
+                                <Link href={`/communities/unFollow/${accountId}`} className="relative h-5 w-5 object-cover">
+                                    <Image
+                                        src="/assets/logout.svg"
+                                        alt="profile photo"
+                                        fill
+                                        className="object-cover shadow-2xl cursor-pointer"
+                                    />
+                                </Link>
+                            ):""
+                        }
+                        </>
                     ):(
-                        <Link href={`/profile/edit`} className="relative h-5 w-5 object-cover">
-                            <Image
-                                src="/assets/edit.svg"
-                                alt="profile photo"
-                                fill
-                                className="object-cover shadow-2xl"
-                            />
-                        </Link>
+                        <>
+                        {accountId===authUserId?
+                            <Link href={`/profile/edit/`} className="relative h-5 w-5 object-cover">
+                                <Image
+                                    src="/assets/edit.svg"
+                                    alt="profile photo"
+                                    fill
+                                    className="object-cover shadow-2xl"
+                                />
+                            </Link>:""
+                        }
+                        </>
                     )}
                 </div>
             </div>
@@ -90,7 +108,7 @@ const ProfileHeader = async ({
                     ) : (
                         <Button size="sm" className="community-card_btn">
                             <Link href={`/communities/request/${accountId}`}>
-                                Request
+                                Follow
                             </Link>
                         </Button>
                     )
