@@ -173,7 +173,14 @@ module.exports = {
     },
     extend: {
       colors: {
-        "primary-500": "#76ABAE",
+        white: {
+          1: "#FFFFFF",
+          2: "rgba(255, 255, 255, 0.72)",
+          3: "rgba(255, 255, 255, 0.4)",
+          4: "rgba(255, 255, 255, 0.64)",
+          5: "rgba(255, 255, 255, 0.80)",
+        },
+        "primary-500": "#F97535",
         "secondary-500": "#FFB620",
         blue: "#0095F6",
         "logout-btn": "#FF5A5A",
@@ -188,6 +195,20 @@ module.exports = {
         "light-4": "#5C5C7B",
         "gray-1": "#697C89",
         glassmorphism: "rgba(16, 16, 18, 0.60)",
+        black: {
+          1: "#15171C",
+          2: "#222429",
+          3: "#101114",
+          4: "#252525",
+          5: "#2E3036",
+          6: "#24272C",
+        },
+        orange: {
+          1: "#F97535",
+        },
+        gray: {
+          1: "#71788B",
+        },
       },
       boxShadow: {
         "count-badge": "0px 0px 6px 2px rgba(219, 188, 159, 0.30)",
@@ -213,6 +234,7 @@ module.exports = {
 
       backgroundImage: {
         '30-black-70-white': 'linear-gradient(to bottom, black 35%, rgb(18, 18, 18) 34%)',
+        "nav-focus":"linear-gradient(270deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.00) 100%)",
       }
     },
   },

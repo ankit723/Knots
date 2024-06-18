@@ -16,12 +16,12 @@ const Topbar = async () => {
         <nav className='topbar'>
             <Link href='/' className='flex items-center gap-4'>
                 <Image src='/assets/logo.png' alt='logo' width={28} height={28} />
-                <p className='text-heading3-bold text-light-1 max-xs:hidden'>Knots</p>
+                <p className='text-heading3-bold font-extrabold text-light-1 max-xs:hidden'>Knots</p>
             </Link>
 
             <div className="flex items-center gap-1 ">
                 <SignedOut>
-                    <Link href={"/sign-in"} className='text-heading5-bold text-dark-3 bg-white px-5 py-2 rounded-lg'>Sign In</Link>
+                    <Link href={"/sign-in"} className='text-black-3 bg-white px-5 py-2 rounded-lg font-extrabold w-full bg-orange-1'>Sign In</Link>
                 </SignedOut>
                 <div className="block md:hidden">
                     <SignedIn>
@@ -34,7 +34,7 @@ const Topbar = async () => {
                 </div>
 
                 {user?(<Link href={'/profile/edit'}>
-                    <div className=" bg-[#ffffff1d] px-6 rounded-lg py-1 flex items-center justify-center gap-3">
+                    <div className=" bg-[#ffffff08] px-6 rounded-lg py-1 flex items-center justify-center gap-3">
                         <Image
                             src={userInfo?.image||user?.imageUrl}
                             alt="logo"
@@ -44,7 +44,7 @@ const Topbar = async () => {
                         />
 
                         <div className="flex-1 text-ellipsis">
-                            <h4 className='text-small-semibold text-light-1'>{userInfo?.name||user?.firstName}</h4>
+                            <h4 className='text-small-semibold text-light-1 font-extrabold'>{userInfo?.name||user?.firstName}</h4>
                             <p className="text-small-medium text-gray-1">@{userInfo?.username || user?.username}</p>
                         </div>
 
