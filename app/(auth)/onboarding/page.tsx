@@ -6,18 +6,18 @@ import Link from "next/link";
 
 async function Page(){
     const user =await currentUser()
+    if(!user) redirect('sign-in')
 
-    const userInfo = await fetchUser(user?.id || "")
+    const userInfo = await fetchUser(user.id)
     
     if(userInfo) redirect('/')
 
     const userData={
-        id:user?.id,
-        objectId:(userInfo?._id).toString(),
-        username:userInfo?.username || user?.username,
-        name:userInfo?.name || user?.firstName || "",
-        bio:userInfo?.bio || "",
-        image:userInfo?.image || user?.imageUrl,
+        id:user.id,
+        username:user.username,
+        name: user.firstName,
+        bio:"",
+        image:user.imageUrl,
     }
 
     return(

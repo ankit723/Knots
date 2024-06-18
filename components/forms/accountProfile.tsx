@@ -30,7 +30,6 @@ import { updateUser } from "@/lib/actions/user.action";
 interface Props {
   user: {
     id: string;
-    objectId: string;
     username: string;
     name: string;
     bio: string;
