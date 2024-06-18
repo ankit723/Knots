@@ -24,6 +24,11 @@ export async function fetchKnots(pageNumber = 1, pageSize = 20) {
       model: User,
     })
     .populate({
+      path: "likes",
+      model: User,
+      select: "_id id username image",
+    }) // Populate the likes field with _id and username
+    .populate({
       path: "community",
       model: Community,
     })
@@ -67,7 +72,7 @@ export async function createKnot({ text, author, communityId, path }: Params) {
     const createdKnot = await Knot.create({
       text,
       author,
-      community: communityIdObject, // Assign communityId if provided, or leave it null for personal account
+      community: communityIdObject,
     });
 
     // Update User model
@@ -177,7 +182,12 @@ export async function fetchKnotById(knotId: string) {
         path: "author",
         model: User,
         select: "_id id username image",
-      }) // Populate the author field with _id and username
+      })
+      .populate({
+        path: "likes",
+        model: User,
+        select: "_id id username image",
+      }) // Populate the likes field with _id and username
       .populate({
         path: "community",
         model: Community,
@@ -247,5 +257,47 @@ export async function addCommentToKnot(
   } catch (err) {
     console.error("Error while adding comment:", err);
     throw new Error("Unable to add comment");
+  }
+}
+
+export async function likeKnot(knotId: string, userId: string) {
+  try {
+    await connectedToDB();
+
+    // Update the knot by pushing the userId into the likes array
+    const updatedKnot = await Knot.findByIdAndUpdate(
+      knotId,
+      { $push: { likes: userId } },
+      { new: true } // This option returns the updated document
+    );
+
+    if (!updatedKnot) {
+      throw new Error('Knot not found');
+    }
+
+    return updatedKnot;
+  } catch (error: any) {
+    throw new Error(`Failed to add like to knot: ${error.message}`);
+  }
+}
+
+export async function dislikeKnot(knotId: string, userId: string) {
+  try {
+    await connectedToDB();
+
+    // Update the knot by pushing the userId into the likes array
+    const updatedKnot = await Knot.findByIdAndUpdate(
+      knotId,
+      { $pull: { likes: userId } },
+      { new: true } // This option returns the updated document
+    );
+
+    if (!updatedKnot) {
+      throw new Error('Knot not found');
+    }
+
+    return updatedKnot;
+  } catch (error: any) {
+    throw new Error(`Failed to remove like from knot: ${error.message}`);
   }
 }

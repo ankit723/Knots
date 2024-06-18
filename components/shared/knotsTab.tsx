@@ -34,6 +34,8 @@ const KnotsTab = async({currentUserId, accountId, accountType}:Props) => {
                         accountType === 'User'
                         ? {username:result.username, image:result.image, id:result.id}
                         : {username:knot.author.username, image:knot.author.image, id:knot.author.id }}
+                    likes={knot.likes}
+
                     community={knot.community}
                     createdAt={knot.createdAt}
                     comments={knot.childrens}

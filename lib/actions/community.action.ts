@@ -101,6 +101,11 @@ export async function fetchCommunityPosts(id: string) {
           select: "username image id", // Select the "name" and "_id" fields from the "User" model
         },
         {
+          path: "likes",
+          model: User,
+          select: "username id image _id", // Select the "name" and "_id" fields from the "Community" model
+        },
+        {
           path: "children",
           model: Knot,
           populate: {

@@ -13,6 +13,11 @@ interface Props {
         image: string,
         id: string
     },
+    likes: {
+        username: string,
+        image: string,
+        id: string
+    }[],
     community: {
         id: string,
         name: string,
@@ -33,12 +38,15 @@ const KnotCard = ({
     parentId,
     content,
     author,
+    likes,
     community,
     createdAt,
     comments,
     isComment
 }: Props) => {
     const formattedDate = new Date(createdAt).toLocaleString();
+
+    const isLiked = likes.some((u) => u.id === currentUserId);
 
     // Function to convert URLs in content to clickable links
     const convertToLinks = (text: string) => {
@@ -68,7 +76,9 @@ const KnotCard = ({
                         <div className="mt-5 flex flex-col gap-3 justify-center">
                             <div className="flex justify-center md:justify-between items-center gap-10 md:gap-0">
                                 <div className="flex gap-3.5">
-                                    <Image src='/assets/heart-gray.svg' alt='heart' width={24} height={24} className='cursor-pointer object-contain' />
+                                    <Link href={`/knot/like/${id}`}>
+                                        <Image src={likes?isLiked?'/assets/heart-filled.svg':"/assets/heart-gray.svg":"assets/heart-gray.svg"} alt='heart' width={24} height={24} className='cursor-pointer object-contain' />
+                                    </Link>
                                     <Link href={`/knot/${id}`}>
                                         <Image src='/assets/reply.svg' alt='reply' width={24} height={24} className='cursor-pointer object-contain' />
                                     </Link>

@@ -1,7 +1,15 @@
 import mongoose from "mongoose";
+import User from "./user.model";
 
 const knotSchema=new mongoose.Schema({
   text:{type:String, required:true},
+  likes:[
+    {
+      type:mongoose.Schema.Types.ObjectId,
+      ref:"User",
+      
+    }
+  ],
   author:{
     type:mongoose.Schema.Types.ObjectId,
     ref:"User",

@@ -38,6 +38,7 @@ const Page = async({ params }: { params: { id: string } }) => {
                 parentId={post.parentId}
                 content={post.text}
                 author={post.author}
+                likes={post.likes}
                 community={post.community}
                 createdAt={post.createdAt}
                 comments={post.children}
@@ -48,7 +49,7 @@ const Page = async({ params }: { params: { id: string } }) => {
                 <Comment 
                     postId={post.id}
                     currentUserImg={userInfo?.image}
-                    currentUserId={JSON.stringify((userInfo?._id).toString())}
+                    currentUserId={JSON.stringify((userInfo?._id))}
                     isOnboarded={isOnboarded}
                     isAuthenticated={isAuthenticated}
                 />
@@ -64,6 +65,7 @@ const Page = async({ params }: { params: { id: string } }) => {
                             parentId={childItem.parentId}
                             content={childItem.text}
                             author={childItem.author}
+                            likes={childItem.likes}
                             community={childItem.community}
                             createdAt={childItem.createdAt}
                             comments={childItem.children}
