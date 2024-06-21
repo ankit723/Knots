@@ -180,7 +180,7 @@ module.exports = {
           4: "rgba(255, 255, 255, 0.64)",
           5: "rgba(255, 255, 255, 0.80)",
         },
-        "primary-500": "#F97535",
+        "primary-500": "#877EFF",
         "secondary-500": "#FFB620",
         blue: "#0095F6",
         "logout-btn": "#FF5A5A",
@@ -204,7 +204,7 @@ module.exports = {
           6: "#24272C",
         },
         orange: {
-          1: "#F97535",
+          1: "#877EFF",
         },
         gray: {
           1: "#71788B",
