@@ -10,7 +10,6 @@ import { fetchCommunityDetails } from "@/lib/actions/community.action";
 import UserCard from "@/components/cards/userCard";
 import RequestCard from "@/components/cards/requestCard";
 import PostKnot from "@/components/forms/postKnot";
-import { use } from "react";
 
 async function Page({params}:{params:{id:string}}){
     const user=await currentUser()
@@ -23,6 +22,7 @@ async function Page({params}:{params:{id:string}}){
         isOnboarded=true;
     }
     const communityDetails=await fetchCommunityDetails(params.id)
+    const members=communityDetails?.members.map((mem:any)=>mem.id)
 
     return (
         <section>
@@ -40,23 +40,73 @@ async function Page({params}:{params:{id:string}}){
                 <Tabs defaultValue="knots" className="w-full">
                     <TabsList className="tab">
                         {communityTabs.map((tab)=>(
-                            <TabsTrigger key={tab.label} value={tab.value} className="tab">
-                                <Image 
-                                    src={tab.icon}
-                                    alt={tab.label}
-                                    width={24}
-                                    height={24}
-                                    className="object-contain "
-                                />
+                            <>
+                            {tab.value==='requests'?(
+                                <>{communityDetails.id.includes(user?.id)?(
+                                    <TabsTrigger key={tab.label} value={tab.value} className="tab">
+                                        <Image 
+                                            src={tab.icon}
+                                            alt={tab.label}
+                                            width={24}
+                                            height={24}
+                                            className="object-contain "
+                                        />
 
-                                <p className="max-sm:hidden">{tab.label}</p>
+                                        <p className="max-sm:hidden">{tab.label}</p>
 
-                                {tab.label==='Knots'&&(
-                                    <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
-                                        {communityDetails?.knots?.length}
-                                    </p>
-                                )}
-                            </TabsTrigger>
+                                        {tab.label==='Knots'&&(
+                                            <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
+                                                {communityDetails?.knots?.length}
+                                            </p>
+                                        )}
+                                    </TabsTrigger>
+                                ):""}</>
+                            ):(
+                                <>
+                                {tab.value==='postKnot'?(
+                                <>{members.includes(user?.id)?(
+                                    <TabsTrigger key={tab.label} value={tab.value} className="tab">
+                                        <Image 
+                                            src={tab.icon}
+                                            alt={tab.label}
+                                            width={24}
+                                            height={24}
+                                            className="object-contain "
+                                        />
+
+                                        <p className="max-sm:hidden">{tab.label}</p>
+
+                                        {tab.label==='Knots'&&(
+                                            <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
+                                                {communityDetails?.knots?.length}
+                                            </p>
+                                        )}
+                                    </TabsTrigger>
+                                ):""}</>
+                            ):(
+                                <>
+                                <TabsTrigger key={tab.label} value={tab.value} className="tab">
+                                    <Image 
+                                        src={tab.icon}
+                                        alt={tab.label}
+                                        width={24}
+                                        height={24}
+                                        className="object-contain "
+                                    />
+
+                                    <p className="max-sm:hidden">{tab.label}</p>
+
+                                    {tab.label==='Knots'&&(
+                                        <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
+                                            {communityDetails?.knots?.length}
+                                        </p>
+                                    )}
+                                </TabsTrigger>
+                                </>
+                            )}
+                                </>
+                            )}
+                            </>
                         ))}
                     </TabsList>
 
@@ -82,7 +132,7 @@ async function Page({params}:{params:{id:string}}){
                             ))}
                         </section>
                     </TabsContent>
-
+                    
                     <TabsContent value="requests" className="w-full text-light-1">
                         {communityDetails.createdBy?.id===user?.id?
                             (<section className="mt-9 flex flex-col gap-10">
@@ -103,7 +153,7 @@ async function Page({params}:{params:{id:string}}){
                     </TabsContent>
 
                     <TabsContent value="postKnot" className="w-full text-light-1">
-                        <PostKnot userId={(userInfo?._id).toString()} isOnboarded={true} organization={communityDetails.id}/>
+                        <PostKnot userId={(userInfo?._id)} isOnboarded={true} organization={communityDetails.id}/>
                     </TabsContent>
                 </Tabs>
             </div>

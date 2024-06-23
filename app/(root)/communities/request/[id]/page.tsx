@@ -6,6 +6,7 @@ import { redirect } from 'next/navigation'
 const page = async({params}:{params:{id:string}}) => {
     const user= await currentUser()
     const userInfo= await fetchUser(user?.id || "")
+    if(!userInfo)redirect('/onboarding')
 
     if(!user) redirect('/sign-in')
 
