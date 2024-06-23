@@ -1,24 +1,12 @@
 "use client";
-
-import * as z from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { usePathname, useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-
-import { KnotValidation } from "@/lib/validations/knot";
 import { createKnot } from "@/lib/actions/knot.action";
-import { useOrganization } from "@clerk/nextjs";
+import { useState, useEffect } from "react";
+import GenerateThumbnail from "./generateImage";
 
 interface Props {
     user: {
@@ -43,15 +31,30 @@ function PostKnot({
 }) {
     const router = useRouter();
     const pathname = usePathname();
+    const [imageUrl, setImageUrl]=useState("")
 
     const form = useForm({
-        resolver: zodResolver(KnotValidation),
         defaultValues: {
-            knot: ""
+            knot: "",
+            imageUrl:"",
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof KnotValidation>) => {
+    const { reset, setValue } = form;
+
+    const knot = useWatch({
+        control: form.control,
+        name: 'knot',
+      });
+    
+      useEffect(() => {
+        reset({
+          knot,
+          imageUrl,
+        });
+      }, [imageUrl, knot, reset]);
+
+    const onSubmit = async (values: any) => {
 
         if (!isOnboarded) {
             router.push("/onboarding");
@@ -60,6 +63,7 @@ function PostKnot({
 
         await createKnot({
             text: values.knot,
+            imageUrl:values.imageUrl,
             author: userId,
             communityId: organization ?? null,
             path: pathname,
@@ -89,6 +93,13 @@ function PostKnot({
                             </FormItem>
                         )}
                     />
+
+                    <div className="flex flex-col pt-10">
+                        <GenerateThumbnail 
+                            setImage={setImageUrl}
+                            image={imageUrl}
+                        />
+                    </div>
 
                     <Button type="submit" className="bg-primary-500">
                         Connect Knot

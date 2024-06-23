@@ -22,6 +22,7 @@ export default async function Home() {
                 currentUserId={user?.id || ""}
                 parentId={post.parentId}
                 content={post.text}
+                image={post.imageUrl?post.imageUrl:null}
                 author={post.author}
                 likes={post.likes}
                 community={post.community}

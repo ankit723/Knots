@@ -3,6 +3,9 @@ import User from "./user.model";
 
 const knotSchema=new mongoose.Schema({
   text:{type:String, required:true},
+  imageUrl:{
+    type:String
+  },
   likes:[
     {
       type:mongoose.Schema.Types.ObjectId,

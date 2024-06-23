@@ -55,12 +55,13 @@ export async function fetchKnots(pageNumber = 1, pageSize = 20) {
 
 interface Params {
   text: string,
+  imageUrl:string,
   author: string,
   communityId: string | null,
   path: string,
 }
 
-export async function createKnot({ text, author, communityId, path }: Params) {
+export async function createKnot({ text, imageUrl, author, communityId, path }: Params) {
   try {
     connectedToDB();
 
@@ -71,6 +72,7 @@ export async function createKnot({ text, author, communityId, path }: Params) {
 
     const createdKnot = await Knot.create({
       text,
+      imageUrl,
       author,
       community: communityIdObject,
     });
@@ -93,15 +95,25 @@ export async function createKnot({ text, author, communityId, path }: Params) {
   }
 }
 
-export async function editKnot(knotId:string, text:string) {
+export async function editKnot(knotId:string, text:string, imageUrl:string) {
   try {
     connectedToDB();
-    const createdKnot = await Knot.findByIdAndUpdate(knotId,
-      {
-        text,
-        createdAt:Date.now()
-      }
-    );
+    if(imageUrl!=""){
+      await Knot.findByIdAndUpdate(knotId,
+        {
+          text,
+          imageUrl,
+          createdAt:Date.now()
+        }
+      );
+    }else{
+      await Knot.findByIdAndUpdate(knotId,
+        {
+          text,
+          createdAt:Date.now()
+        }
+      );
+    }
   } catch (error: any) {
     throw new Error(`Failed to create knot: ${error.message}`);
   }

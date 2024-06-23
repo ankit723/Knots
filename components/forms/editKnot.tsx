@@ -1,41 +1,60 @@
 "use client";
-
-import * as z from "zod";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { usePathname, useRouter } from "next/navigation";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage,} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { editKnot, fetchKnotById } from "@/lib/actions/knot.action";
+import { useState, useEffect } from "react";
+import GenerateThumbnail from "./generateImage";
 
-import { KnotValidation } from "@/lib/validations/knot";
-import { editKnot } from "@/lib/actions/knot.action";
-import { useOrganization } from "@clerk/nextjs";
+interface Props {
+    user: {
+        id: string;
+        objectId: string;
+        username: string;
+        name: string;
+        bio: string;
+        image: string;
+    };
+    btnTitle: string;
+}
 
 function EditKnot({
-    id
+    id,
+    text,
+    image,
 }: {
-    id:string
+    id:string,
+    text:string,
+    image:string,
 }) {
     const router = useRouter();
+    const [imageUrl, setImageUrl]=useState(image)
 
     const form = useForm({
-        resolver: zodResolver(KnotValidation),
         defaultValues: {
-            knot: ""
+            knot: text,
+            imageUrl:imageUrl,
         },
     });
 
-    const onSubmit = async (values: z.infer<typeof KnotValidation>) => {
-        await editKnot(id, values.knot);
+    const { reset, setValue } = form;
+
+    const knot = useWatch({
+        control: form.control,
+        name: 'knot',
+      });
+    
+      useEffect(() => {
+        reset({
+          knot,
+          imageUrl,
+        });
+      }, [imageUrl, knot, reset]);
+
+    const onSubmit = async (values: any) => {
+        await editKnot(id, values.knot, values.imageUrl);
         router.push("/");
     };
     return (
@@ -60,6 +79,13 @@ function EditKnot({
                             </FormItem>
                         )}
                     />
+
+                    <div className="flex flex-col pt-10">
+                        <GenerateThumbnail 
+                            setImage={setImageUrl}
+                            image={imageUrl}
+                        />
+                    </div>
 
                     <Button type="submit" className="bg-primary-500">
                         Edit Knot

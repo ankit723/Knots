@@ -37,6 +37,7 @@ const Page = async({ params }: { params: { id: string } }) => {
                 currentUserId={user?.id || ""}
                 parentId={post.parentId}
                 content={post.text}
+                image={post.imageUrl?post.imageUrl:null}
                 author={post.author}
                 likes={post.likes}
                 community={post.community}
@@ -64,6 +65,7 @@ const Page = async({ params }: { params: { id: string } }) => {
                             currentUserId={user?.id || ""}
                             parentId={childItem.parentId}
                             content={childItem.text}
+                            image={childItem.imageUrl?childItem.imageUrl:null}
                             author={childItem.author}
                             likes={childItem.likes}
                             community={childItem.community}

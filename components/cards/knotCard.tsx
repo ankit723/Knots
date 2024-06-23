@@ -8,6 +8,7 @@ interface Props {
     currentUserId: string,
     parentId: string | null,
     content: string,
+    image:string | null,
     author: {
         username: string,
         image: string,
@@ -37,6 +38,7 @@ const KnotCard = ({
     currentUserId,
     parentId,
     content,
+    image,
     author,
     likes,
     community,
@@ -72,6 +74,10 @@ const KnotCard = ({
                         </Link>
 
                         <div className='mt-2 text-small-regular text-light-2 cursor-pointer break-words' dangerouslySetInnerHTML={{ __html: convertToLinks(content) }}></div>
+
+                        <div className="flex justify-center items-center w-full h-full mt-5 p-5">
+                            {image?<Image src={image} width={600} height={600} alt="Post Image" quality={100} className='w-full h-full '/>:""}
+                        </div>
 
                         <div className="mt-5 flex flex-col gap-3 justify-center">
                             <div className="flex justify-center md:justify-between items-center gap-10 md:gap-0">

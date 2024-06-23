@@ -30,6 +30,7 @@ const KnotsTab = async({currentUserId, accountId, accountType}:Props) => {
                     currentUserId={currentUserId}
                     parentId={knot.parentId}
                     content={knot.text}
+                    image={knot.imageUrl?knot.imageUrl:null}
                     author={
                         accountType === 'User'
                         ? {username:result.username, image:result.image, id:result.id}
