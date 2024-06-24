@@ -29,6 +29,11 @@ export const sidebarLinks = [
       route: "/profile",
       label: "Profile",
     },
+    {
+      imgURL: "/assets/tag.svg",
+      route: "/connect-app",
+      label: "Connect Apps",
+    },
   ];
   
   export const profileTabs = [
