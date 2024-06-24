@@ -10,7 +10,6 @@ import { useRouter } from 'next/navigation'
 
 const Page = () => {
     const [input, setInput] = useState("")
-    const [userInfo, setUserInfo] = useState(false)
     const router =useRouter()
     const {user}=useClerk()
     if(!user)redirect('/sign-in')
@@ -68,7 +67,7 @@ const Page = () => {
                         Connect With Podcraftr
                     </h1>
                     <h1 className="text-white-1 p-5 rounded-lg text-center">
-                        don't have an account <Link href="https://podcraftr.vercel.app/sign-up" className='text-white-1 font-bold bg-orange-1 p-2 rounded-lg mt-3'>Create One Now!</Link>
+                        don&apos;t have an account <Link href="https://podcraftr.vercel.app/sign-up" className='text-white-1 font-bold bg-orange-1 p-2 rounded-lg mt-3'>Create One Now!</Link>
                     </h1>
                 </div>
             </div>
