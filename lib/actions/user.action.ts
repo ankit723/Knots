@@ -22,6 +22,34 @@ export async function fetchUser(userId: string) {
   }
 }
 
+export async function isUserOnboarded(userId: string) {
+  try {
+    connectedToDB();
+
+    const user=await User.findOne({ id: userId })
+    if(user){
+      return true
+    }else{
+      return false
+    }
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
+
+export async function fetchUserPodcastId(userId: string) {
+  try {
+    connectedToDB();
+
+    const user=await User.findOne({ id: userId })
+    if(user){
+      return user.podcraftrId
+    }
+  } catch (error: any) {
+    throw new Error(`Failed to fetch user: ${error.message}`);
+  }
+}
+
 
 export async function fetchUserCommunities(userId:string){
   try {
@@ -202,5 +230,21 @@ export async function getActivity(userId: string) {
   } catch (error) {
     console.error("Error fetching replies: ", error);
     throw error;
+  }
+}
+
+export async function addPodcraftrId(userId:string, podcraftrId:string): Promise<void> {
+  try {
+    connectedToDB();
+
+    await User.findOneAndUpdate(
+      { id: userId },
+      {
+        podcraftrId:podcraftrId,
+      },
+      { upsert: true }
+    );
+  } catch (error: any) {
+    throw new Error(`Failed to create/update user: ${error.message}`);
   }
 }
